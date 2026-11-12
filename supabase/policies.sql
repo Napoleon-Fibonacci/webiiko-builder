@@ -1,0 +1,20 @@
+-- Webiko Builder — policy RLS
+--
+-- Sengaja TIDAK ADA policy.
+--
+-- Semua tabel sudah mengaktifkan RLS di schema.sql. Tanpa policy, kunci
+-- anon dan authenticated tidak bisa membaca atau menulis apa pun.
+-- Server memakai service_role, yang melewati RLS.
+--
+-- Verifikasi setelah schema.sql dijalankan:
+--   select tablename, rowsecurity
+--     from pg_tables
+--    where schemaname = 'public'
+--      and tablename in ('users','projects','messages','usage_daily',
+--                        'usage_global','rate_limits');
+-- Semua baris harus rowsecurity = true.
+--
+--   select tablename, policyname
+--     from pg_policies
+--    where schemaname = 'public';
+-- Hasilnya harus kosong.

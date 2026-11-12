@@ -1,0 +1,10 @@
+{
+  "name": "webiko-builder",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "Webiko Builder — bikin website dengan AI, untuk pelajar.",
+  "engines": {
+    "node": ">=20"
+  }
+}

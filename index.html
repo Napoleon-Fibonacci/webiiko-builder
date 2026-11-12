@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="id" data-tema="terang">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Webiko Builder — Bikin website, cukup ngobrol</title>
+  <meta name="description" content="Buat website pertamamu dengan bantuan AI. Untuk pelajar SMP dan SMA. Hasilnya bisa dipratinjau dan diunduh.">
+  <meta name="theme-color" content="#ffe14d">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/builder.css">
+  <script src="/assets/js/tema.js"></script>
+  <script src="/assets/js/app.js" defer></script>
+</head>
+<body>
+  <!-- ================= MASUK ================= -->
+  <div class="login-shell" id="gerbang">
+    <header class="topline">
+      <div class="logo">
+        <div class="mark" aria-hidden="true">W</div>
+        <div>Webiko Builder<small>Bikin web, ngobrol aja</small></div>
+      </div>
+      <nav aria-label="Tentang">
+        <span class="chip">Untuk SMP &amp; SMA</span>
+        <span class="chip">Gratis</span>
+      </nav>
+    </header>
+
+    <main class="login-main">
+      <section class="hero-copy">
+        <span class="badge"><span aria-hidden="true">✦</span> Vibe coding untuk pelajar</span>
+        <h1>Bikin website<br>pertamamu. <mark class="marker">Cukup ngobrol.</mark></h1>
+        <p class="lead">
+          Tulis mau bikin apa. AI menyusun HTML, CSS, dan JavaScript-nya.
+          Kamu lihat hasilnya langsung, lalu unduh filenya untuk dikumpulkan.
+        </p>
+        <div class="hero-points">
+          <span class="chip">Tanpa install</span>
+          <span class="chip">Tanpa akun ribet</span>
+          <span class="chip">Hasil bisa diunduh</span>
+        </div>
+        <div class="note-line">
+          <span class="tick" aria-hidden="true">✓</span>
+          <span><b>3 project</b> per akun · <b>5 build</b> per hari · tanpa kartu kredit</span>
+        </div>
+
+        <div class="deco-stage" aria-hidden="true">
+          <div class="deco-code">
+            <div class="deco-code__bar">
+              <span class="deco-code__dot"></span>
+              <span class="deco-code__dot"></span>
+              <span class="deco-code__dot"></span>
+            </div>
+            <pre><span class="tok-mut">&lt;!-- dibuat AI, 12 detik --&gt;</span>
+<span class="tok-tag">&lt;section</span> <span class="tok-attr">class</span>=<span class="tok-str">"hero"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;h1&gt;</span>Halo, aku Nadia<span class="tok-tag">&lt;/h1&gt;</span>
+  <span class="tok-tag">&lt;p&gt;</span>Siswa kelas 9 yang suka<span class="tok-tag">&lt;/p&gt;</span>
+  <span class="tok-tag">&lt;a</span> <span class="tok-attr">href</span>=<span class="tok-str">"#karya"</span><span class="tok-tag">&gt;</span>Lihat karya<span class="tok-tag">&lt;/a&gt;</span>
+<span class="tok-tag">&lt;/section&gt;</span></pre>
+          </div>
+
+          <div class="deco-preview">
+            <div class="deco-preview__bar"><i></i><i></i><i></i></div>
+            <div class="deco-preview__hero"></div>
+            <div class="deco-preview__line"></div>
+            <div class="deco-preview__line short"></div>
+            <div class="deco-preview__row">
+              <div class="deco-preview__card"></div>
+              <div class="deco-preview__card"></div>
+            </div>
+          </div>
+
+          <div class="deco-badge">
+            <span>LIVE PREVIEW</span>
+            Langsung terlihat
+          </div>
+        </div>
+      </section>
+
+      <section class="login-card" aria-labelledby="masuk-judul">
+        <div class="notif notif--merah" id="pesan-blokir" hidden>
+          Akun ini sedang diblokir. Hubungi admin kalau menurutmu ini keliru.
+        </div>
+        <h2 id="masuk-judul">Masuk dulu, yuk</h2>
+        <p class="sub">Pakai akun Google. Nama dan email dipakai untuk menjaga kuota tetap adil.</p>
+
+        <a class="btn google-btn" href="/api/auth-masuk">
+          <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+            <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.6l6.7-6.7C35.6 2.5 30.2 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.8 6.1C12.3 13.5 17.7 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-2.8-.4-4.1H24v8.3h12.5c-.3 2.1-1.6 5.2-4.6 7.3l7.6 5.9c4.4-4.1 6.6-10.1 6.6-17.4z"/>
+            <path fill="#FBBC05" d="M10.4 28.7c-.5-1.5-.8-3.1-.8-4.7s.3-3.2.8-4.7l-7.8-6.1C.9 16.3 0 20 0 24s.9 7.7 2.6 10.8l7.8-6.1z"/>
+            <path fill="#34A853" d="M24 48c6.2 0 11.4-2 15.2-5.6l-7.6-5.9c-2 1.4-4.7 2.4-7.6 2.4-6.3 0-11.7-4-13.6-9.8l-7.8 6.1C6.5 42.6 14.6 48 24 48z"/>
+          </svg>
+          Masuk dengan Google
+        </a>
+
+        <div class="divider">KENAPA PERLU MASUK?</div>
+
+        <ul class="trust-list">
+          <li><span class="tick" aria-hidden="true">✓</span><span><b>Kuota adil.</b> Satu akun, satu jatah build harian. Tidak ada yang menghabiskan kredit orang lain.</span></li>
+          <li><span class="tick" aria-hidden="true">✓</span><span><b>Project tersimpan.</b> Tutup tab, buka lagi, hasil kerjamu masih ada.</span></li>
+          <li><span class="tick" aria-hidden="true">✓</span><span><b>Tanpa spam.</b> Email tidak pernah ditampilkan dan tidak dipakai untuk promosi.</span></li>
+        </ul>
+
+        <p class="fineprint">
+          Dengan masuk, kamu setuju hasil dibuat untuk belajar. Jangan membuat situs palsu,
+          phishing, atau konten yang merugikan orang lain.
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <!-- ================= BUILDER ================= -->
+  <div class="app" id="aplikasi" hidden>
+    <header class="appbar">
+      <div class="logo">
+        <div class="mark" aria-hidden="true">W</div>
+        <div>Webiko Builder<small>Ruang kerja</small></div>
+      </div>
+      <div class="appbar__right">
+        <span class="chip" id="chip-kuota">0 / 5 build hari ini</span>
+        <button class="icon-btn" id="tombol-tema" type="button" aria-label="Ubah tema">☾</button>
+        <span class="avatar" id="avatar" title="Akun">?</span>
+        <button class="btn btn--sm btn--ghost" id="tombol-keluar" type="button">Keluar</button>
+      </div>
+    </header>
+
+    <div class="appbody">
+      <aside class="sidebar">
+        <div class="sidebar__head">
+          <h2>Project</h2>
+          <button class="btn btn--sm btn--accent" id="tombol-baru" type="button">+ Baru</button>
+        </div>
+
+        <ul class="project-list" id="daftar-project"></ul>
+        <p class="project-kosong" id="project-kosong" hidden>Belum ada project. Tekan <b>+ Baru</b> untuk mulai.</p>
+
+        <div class="quota">
+          <div class="quota__row"><span>Kuota hari ini</span><span id="kuota-teks">0 / 5</span></div>
+          <div class="meter"><i id="kuota-meter" style="width:0%"></i></div>
+          <small id="kuota-kecil">Reset tengah malam.</small>
+        </div>
+      </aside>
+
+      <div class="workspace">
+        <section class="chat">
+          <div class="chat__head">
+            <div class="chat__judul">
+              <h1 id="judul-project">Pilih project</h1>
+              <p id="meta-project">index.html · style.css · script.js</p>
+            </div>
+            <div class="chat__aksi">
+              <span class="badge badge--diam" id="status-project">Kosong</span>
+              <button class="icon-btn icon-btn--kecil" id="tombol-hapus" type="button" aria-label="Hapus project" title="Hapus project" hidden>×</button>
+            </div>
+          </div>
+
+          <div class="thread" id="thread">
+            <div class="empty-chat" id="thread-kosong">
+              <div class="empty-chat__mark" aria-hidden="true">W</div>
+              <h2>Mulai dari satu kalimat</h2>
+              <p>Tulis mau bikin apa. Contohnya:</p>
+              <div class="contoh">
+                <button type="button" data-contoh="Bikin portofolio sederhana untuk siswa SMP. Ada bagian tentang aku, karya, dan kontak. Warna biru dan kuning.">Portofolio siswa</button>
+                <button type="button" data-contoh="Bikin halaman undangan acara kelas yang rapi. Ada tanggal, lokasi, dan tombol konfirmasi. Nuansa hangat.">Undangan acara kelas</button>
+                <button type="button" data-contoh="Bikin halaman profil klub foto sekolah. Ada galeri karya, jadwal latihan, dan kontak pembina.">Profil klub sekolah</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="composer">
+            <form class="composer__box" id="form-prompt">
+              <label class="sr-only" for="prompt">Mau bikin apa?</label>
+              <textarea id="prompt" rows="2" maxlength="2000" placeholder="Mau bikin apa? Contoh: portofolio sederhana, warna biru kuning, ada bagian karya dan kontak."></textarea>
+              <div class="composer__row">
+                <span class="composer__hint" id="petunjuk-prompt">Maksimal 2.000 karakter</span>
+                <button class="btn btn--primary send" id="tombol-kirim" type="submit" disabled>Kirim</button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <section class="preview">
+          <div class="preview__head">
+            <h2>Pratinjau</h2>
+            <div class="preview__actions">
+              <button class="btn btn--sm btn--ghost" id="tombol-kode" type="button" aria-pressed="false">Kode</button>
+              <a class="btn btn--sm btn--accent" id="tombol-unduh" href="#" aria-disabled="true">Unduh ZIP</a>
+            </div>
+          </div>
+
+          <div class="browser">
+            <div class="browser__bar">
+              <i></i><i></i><i></i>
+              <span class="url" id="url-pratinjau">preview.webiko.local</span>
+            </div>
+            <div class="site-wrap">
+              <iframe id="pratinjau" sandbox="allow-scripts" title="Pratinjau website hasil build"></iframe>
+              <div class="preview-empty" id="pratinjau-kosong">
+                <div class="preview-empty__mark" aria-hidden="true">▷</div>
+                <p>Pratinjau muncul di sini setelah Build pertama selesai.</p>
+              </div>
+              <div class="kode-panel" id="kode-panel" hidden>
+                <div class="kode-tabs" id="kode-tabs"></div>
+                <pre class="kode" id="kode"></pre>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  </div>
+
+  <template id="tpl-project">
+    <li class="project">
+      <button class="project__btn" type="button">
+        <strong class="project__nama"></strong>
+        <span class="project__meta"><i class="dot"></i><span class="project__status"></span></span>
+      </button>
+      <button class="project__hapus" type="button" aria-label="Hapus project">×</button>
+    </li>
+  </template>
+</body>
+</html>
