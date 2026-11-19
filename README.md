@@ -10,8 +10,10 @@ frontend.
 
 ## Isi repo
 
-- `index.html` — gerbang masuk Google + ruang kerja.
+- `index.html` — halaman masuk: landing + tombol Google.
+- `builder.html` — ruang kerja: project, chat, pratinjau, kode, unduhan.
 - `assets/css/builder.css` — token, komponen, tema terang/gelap, responsif.
+- `assets/js/masuk.js` — cek sesi di halaman masuk, lempar ke ruang kerja.
 - `assets/js/app.js` — sesi, project, loop Build, pratinjau, kode, unduhan.
 - `assets/js/tema.js` — pasang tema sebelum halaman digambar.
 - `assets/fonts/segoe/` — font Segoe UI Web lokal.

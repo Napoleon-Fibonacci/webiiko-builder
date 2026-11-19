@@ -399,14 +399,6 @@ li {
   line-height: 1.25;
 }
 
-.marker {
-  background: var(--accent);
-  color: var(--on-accent);
-  padding-inline: 0.08em;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-}
-
 .tick {
   width: 18px;
   height: 18px;
@@ -510,6 +502,10 @@ li {
   margin: 18px 0;
   font-weight: 900;
   padding-bottom: 2px;
+}
+
+.hero-line {
+  display: inline-block;
 }
 
 .hero-copy p.lead {
@@ -817,6 +813,298 @@ li {
 .fineprint a {
   color: var(--primary);
   font-weight: 700;
+}
+
+/* --- Motion halaman masuk --------------------------------- */
+@keyframes masuk-naik {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes masuk-kode {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(0.96) rotate(-6deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(-2deg);
+  }
+}
+
+@keyframes masuk-preview {
+  from {
+    opacity: 0;
+    transform: translateY(26px) scale(0.94) rotate(7deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(2.5deg);
+  }
+}
+
+@keyframes masuk-badge {
+  from {
+    opacity: 0;
+    transform: scale(0.6) rotate(-12deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(-3deg);
+  }
+}
+
+@keyframes masuk-kartu {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes tumbuh-garis {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes pop-tick {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes naik-turun {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes sapu-preview {
+  0% {
+    opacity: 0;
+    transform: translateX(-130%);
+  }
+  12% {
+    opacity: 1;
+  }
+  60%,
+  100% {
+    opacity: 0;
+    transform: translateX(330%);
+  }
+}
+
+@keyframes denyut {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.07);
+  }
+}
+
+@keyframes kedip {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.login-shell .topline .logo,
+.topline nav .chip,
+.hero-copy .badge,
+.hero-copy h1,
+.hero-copy p.lead,
+.hero-points .chip,
+.note-line,
+.login-card h2,
+.login-card .sub,
+.login-card .google-btn,
+.divider,
+.trust-list li,
+.fineprint {
+  animation: masuk-naik 520ms var(--ease) backwards;
+}
+
+.login-shell .topline .logo {
+  animation-delay: 60ms;
+}
+
+.topline nav .chip:nth-child(1) {
+  animation-delay: 120ms;
+}
+
+.topline nav .chip:nth-child(2) {
+  animation-delay: 170ms;
+}
+
+.hero-copy .badge {
+  animation-delay: 200ms;
+}
+
+.hero-copy h1 {
+  animation-delay: 260ms;
+}
+
+.hero-copy p.lead {
+  animation-delay: 520ms;
+}
+
+.hero-points .chip:nth-child(1) {
+  animation-delay: 620ms;
+}
+
+.hero-points .chip:nth-child(2) {
+  animation-delay: 680ms;
+}
+
+.hero-points .chip:nth-child(3) {
+  animation-delay: 740ms;
+}
+
+.note-line {
+  animation-delay: 800ms;
+}
+
+.note-line .tick {
+  animation: pop-tick 320ms var(--ease) 900ms backwards;
+}
+
+.deco-code {
+  animation: masuk-kode 620ms var(--ease) 700ms backwards;
+}
+
+.deco-preview {
+  animation: masuk-preview 620ms var(--ease) 820ms backwards;
+}
+
+.deco-badge {
+  animation: masuk-badge 520ms var(--ease) 960ms backwards;
+}
+
+.deco-stage {
+  animation: naik-turun 7s ease-in-out 1.8s infinite;
+}
+
+.deco-code__dot {
+  animation: kedip 2.6s ease-in-out infinite;
+}
+
+.deco-code__dot:nth-child(1) {
+  animation-delay: 1.8s;
+}
+
+.deco-code__dot:nth-child(2) {
+  animation-delay: 2s;
+}
+
+.deco-code__dot:nth-child(3) {
+  animation-delay: 2.2s;
+}
+
+.deco-preview__hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 45%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  pointer-events: none;
+  animation: sapu-preview 4.2s ease-in-out 1.9s infinite;
+}
+
+.deco-preview__hero::after {
+  animation: denyut 3.4s ease-in-out 2.2s infinite;
+}
+
+.login-card {
+  animation: masuk-kartu 560ms var(--ease) 460ms backwards;
+}
+
+.login-card::before {
+  animation: masuk-naik 420ms var(--ease) 640ms backwards;
+}
+
+.login-card h2 {
+  animation-delay: 700ms;
+}
+
+.login-card .sub {
+  animation-delay: 740ms;
+}
+
+.login-card .google-btn {
+  animation-delay: 800ms;
+}
+
+.divider {
+  animation-delay: 860ms;
+}
+
+.divider::before,
+.divider::after {
+  transform-origin: center;
+  animation: tumbuh-garis 460ms var(--ease) 920ms backwards;
+}
+
+.trust-list li:nth-child(1) {
+  animation-delay: 920ms;
+}
+
+.trust-list li:nth-child(2) {
+  animation-delay: 970ms;
+}
+
+.trust-list li:nth-child(3) {
+  animation-delay: 1020ms;
+}
+
+.trust-list li:nth-child(1) .tick {
+  animation: pop-tick 320ms var(--ease) 1000ms backwards;
+}
+
+.trust-list li:nth-child(2) .tick {
+  animation: pop-tick 320ms var(--ease) 1050ms backwards;
+}
+
+.trust-list li:nth-child(3) .tick {
+  animation: pop-tick 320ms var(--ease) 1100ms backwards;
+}
+
+.fineprint {
+  animation-delay: 1120ms;
 }
 
 /* --- Kerangka aplikasi ------------------------------------ */
@@ -1696,6 +1984,173 @@ li {
   color: var(--success);
 }
 
+/* --- Motion ruang kerja ----------------------------------- */
+@keyframes app-turun {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes app-kiri {
+  from {
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes app-naik {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pesan-masuk {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toast-masuk {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 14px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+@keyframes kode-masuk {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bar-jalan {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.appbar {
+  animation: app-turun 380ms var(--ease) 40ms backwards;
+}
+
+.chat__head {
+  animation: app-turun 360ms var(--ease) 120ms backwards;
+}
+
+.preview__head {
+  animation: app-turun 360ms var(--ease) 160ms backwards;
+}
+
+.browser {
+  animation: app-naik 460ms var(--ease) 220ms backwards;
+}
+
+.composer {
+  animation: app-naik 400ms var(--ease) 220ms backwards;
+}
+
+@media (min-width: 861px) {
+  .sidebar {
+    animation: app-kiri 420ms var(--ease) 100ms backwards;
+  }
+}
+
+.daftar--masuk .project {
+  animation: app-kiri 320ms var(--ease) backwards;
+}
+
+.daftar--masuk .project:nth-child(1) {
+  animation-delay: 160ms;
+}
+
+.daftar--masuk .project:nth-child(2) {
+  animation-delay: 200ms;
+}
+
+.daftar--masuk .project:nth-child(3) {
+  animation-delay: 240ms;
+}
+
+.empty-chat > * {
+  animation: app-naik 380ms var(--ease) backwards;
+}
+
+.empty-chat > *:nth-child(1) {
+  animation-delay: 240ms;
+}
+
+.empty-chat > *:nth-child(2) {
+  animation-delay: 300ms;
+}
+
+.empty-chat > *:nth-child(3) {
+  animation-delay: 360ms;
+}
+
+.empty-chat > *:nth-child(4) {
+  animation-delay: 420ms;
+}
+
+.msg--baru {
+  animation: pesan-masuk 280ms var(--ease) backwards;
+}
+
+.msg--baru .msg__avatar {
+  animation: pop-tick 300ms var(--ease) 60ms backwards;
+}
+
+.badge--jalan {
+  animation: denyut 2.4s ease-in-out infinite;
+}
+
+.steps i.now {
+  animation: bar-jalan 1.3s ease-in-out infinite;
+}
+
+.preview-empty {
+  animation: app-naik 360ms var(--ease) 140ms backwards;
+}
+
+.kode-panel {
+  animation: kode-masuk 300ms var(--ease) backwards;
+}
+
+.toast {
+  animation: toast-masuk 260ms var(--ease) backwards;
+}
+
 /* --- Hover hanya untuk perangkat yang punya hover ------ */
 @media (hover: hover) {
   .btn:not([disabled]):not([aria-disabled="true"]):hover {
@@ -2170,6 +2625,7 @@ li {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;

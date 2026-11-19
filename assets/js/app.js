@@ -9,9 +9,7 @@
   const el = (id) => document.getElementById(id);
 
   const dom = {
-    gerbang: el("gerbang"),
     aplikasi: el("aplikasi"),
-    pesanBlokir: el("pesan-blokir"),
     formPrompt: el("form-prompt"),
     prompt: el("prompt"),
     petunjukPrompt: el("petunjuk-prompt"),
@@ -66,6 +64,9 @@
     kodeTerbuka: false,
     kodeTab: "index.html",
     toastTimer: 0,
+    kunciPesan: new Set(),
+    idKunciPesan: "",
+    daftarMasuk: false,
   };
 
   /* -----------------------------------------------------------
@@ -202,8 +203,7 @@
     if (!e) return;
     console.error(e);
     if (e.status === 401) {
-      bukaGerbang();
-      tampilkanToast("Sesi kamu habis. Masuk lagi, ya.", "salah");
+      kembaliMasuk();
       return;
     }
     tampilkanToast(e.message || "Ada yang salah. Coba lagi.", "salah");
@@ -269,26 +269,19 @@
     perbaruiTombolKirim();
   }
 
-  function bukaGerbang() {
+  function kembaliMasuk() {
     state.sibuk = false;
     state.membangun = false;
     if (state.pratinjauUrl) {
       URL.revokeObjectURL(state.pratinjauUrl);
       state.pratinjauUrl = "";
     }
-    dom.pratinjau.removeAttribute("src");
-    dom.aplikasi.removeAttribute("data-projek");
-    kunciGulir(false);
-    kunciLatar(false);
-    dom.gerbang.hidden = false;
-    dom.aplikasi.hidden = true;
-    document.title = "Masuk — Webiko Builder";
+    location.replace("/");
   }
 
   async function masukAplikasi(sesi) {
     perbaruiSesi(sesi);
-    dom.gerbang.hidden = true;
-    dom.aplikasi.hidden = false;
+    state.daftarMasuk = false;
     document.title = "Ruang kerja — Webiko Builder";
     try {
       await muatProyek();
@@ -300,7 +293,7 @@
   async function segarkanSesi() {
     const sesi = await api("/api/sesi");
     if (!sesi || !sesi.masuk) {
-      bukaGerbang();
+      kembaliMasuk();
       return false;
     }
     perbaruiSesi(sesi);
@@ -364,6 +357,8 @@
 
       dom.daftarProject.append(node);
     }
+    dom.daftarProject.classList.toggle("daftar--masuk", !state.daftarMasuk);
+    state.daftarMasuk = true;
     dom.projectKosong.hidden = state.proyek.length > 0;
     dom.jumlahProject.textContent = String(state.proyek.length);
     dom.jumlahProject.hidden = state.proyek.length === 0;
@@ -647,10 +642,20 @@
     return kotak;
   }
 
+  function kunciPesan(pesan) {
+    return `${pesan.peran}\u0000${pesan.waktu || ""}\u0000${pesan.teks}`;
+  }
+
   function renderThread() {
     dom.thread.querySelectorAll(".msg, .progress").forEach((n) => n.remove());
 
     const a = state.aktif;
+    const idAktif = a ? a.id : "";
+    if (state.idKunciPesan !== idAktif) {
+      state.kunciPesan = new Set();
+      state.idKunciPesan = idAktif;
+    }
+
     const tampilProgress = Boolean(
       a &&
         (state.membangun ||
@@ -661,15 +666,24 @@
     dom.threadKosong.hidden = state.pesan.length > 0 || tampilProgress;
 
     const fragmen = document.createDocumentFragment();
+    const kunciBaru = new Set();
     for (const pesan of state.pesan) {
       if (!pesan.teks) continue;
-      fragmen.append(buatPesan(pesan));
+      const kunci = kunciPesan(pesan);
+      const node = buatPesan(pesan);
+      if (!state.kunciPesan.has(kunci)) {
+        node.classList.add("msg--baru");
+        kunciBaru.add(kunci);
+      }
+      fragmen.append(node);
     }
     if (tampilProgress) {
       const progress = buatProgress();
       if (progress) fragmen.append(progress);
     }
     dom.thread.append(fragmen);
+
+    for (const kunci of kunciBaru) state.kunciPesan.add(kunci);
 
     requestAnimationFrame(() => {
       dom.thread.scrollTop = dom.thread.scrollHeight;
@@ -986,7 +1000,7 @@
 
     if (sesi.status === "fulfilled") {
       if (!sesi.value || !sesi.value.masuk) {
-        bukaGerbang();
+        kembaliMasuk();
         return;
       }
       perbaruiSesi(sesi.value);
@@ -1044,7 +1058,7 @@
       renderPreview();
       renderKode();
     } catch (e) {
-      if (e && e.status === 401) bukaGerbang();
+      if (e && e.status === 401) kembaliMasuk();
     }
   }
 
@@ -1369,22 +1383,21 @@
     dom.pratinjau.setAttribute("referrerpolicy", "no-referrer");
     dom.tombolKode.disabled = true;
 
-    if (new URLSearchParams(location.search).get("diblokir") === "1") {
-      dom.pesanBlokir.hidden = false;
-    }
-
     pasangPendengar();
     sinkronTombolProject();
 
     try {
       const sesi = await api("/api/sesi");
       if (!sesi || !sesi.masuk) {
-        bukaGerbang();
+        kembaliMasuk();
         return;
       }
       await masukAplikasi(sesi);
     } catch (e) {
-      bukaGerbang();
+      if (e && e.status === 401) {
+        kembaliMasuk();
+        return;
+      }
       tanganiGalat(e);
     }
   }

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id" data-tema="terang">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ruang kerja — Webiko Builder</title>
+  <meta name="description" content="Ruang kerja Webiko Builder: buat, pratinjau, dan unduh website hasil ngobrol dengan AI.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#ffe14d">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/builder.css">
+  <script src="assets/js/tema.js"></script>
+  <script src="assets/js/app.js" defer></script>
+</head>
+<body>
+  <!-- ================= BUILDER ================= -->
+  <div class="app" id="aplikasi">
+    <header class="appbar">
+      <button class="project-toggle" id="tombol-project" type="button" aria-expanded="true" aria-controls="sidebar-project" aria-label="Sembunyikan daftar project" title="Sembunyikan daftar project">
+        <span class="project-toggle__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3 3 8l9 5 9-5-9-5Z"></path>
+            <path d="m3 12 9 5 9-5"></path>
+            <path d="m3 16 9 5 9-5"></path>
+          </svg>
+        </span>
+        <span class="project-toggle__label">Project</span>
+        <span class="project-toggle__count" id="jumlah-project" aria-hidden="true" hidden>0</span>
+      </button>
+      <div class="logo">
+        <div class="mark" aria-hidden="true">W</div>
+        <div>Webiko Builder<small>Ruang kerja</small></div>
+      </div>
+      <div class="appbar__right">
+        <span class="chip" id="chip-kuota">0 / 5 build hari ini</span>
+        <button class="icon-btn" id="tombol-tema" type="button" aria-label="Ubah tema">☾</button>
+        <span class="avatar" id="avatar" title="Akun">?</span>
+        <button class="btn btn--sm btn--ghost" id="tombol-keluar" type="button">Keluar</button>
+      </div>
+    </header>
+
+    <div class="appbody">
+      <aside class="sidebar" id="sidebar-project">
+        <div class="sidebar__head">
+          <h2>Project</h2>
+          <button class="btn btn--sm btn--accent" id="tombol-baru" type="button">+ Baru</button>
+          <button class="icon-btn icon-btn--kecil sidebar__tutup" id="tombol-tutup-project" type="button" aria-label="Tutup daftar project">×</button>
+        </div>
+
+        <ul class="project-list" id="daftar-project"></ul>
+        <p class="project-kosong" id="project-kosong" hidden>Belum ada project. Tekan <b>+ Baru</b> untuk mulai.</p>
+
+        <div class="quota">
+          <div class="quota__row"><span>Kuota hari ini</span><span id="kuota-teks">0 / 5</span></div>
+          <div class="meter"><i id="kuota-meter" style="width:0%"></i></div>
+          <small id="kuota-kecil">Reset tengah malam.</small>
+        </div>
+      </aside>
+
+      <div class="workspace">
+        <section class="chat">
+          <div class="chat__head">
+            <div class="chat__judul">
+              <h1 id="judul-project">Pilih project</h1>
+              <p id="meta-project">index.html · style.css · script.js</p>
+            </div>
+            <div class="chat__aksi">
+              <span class="badge badge--diam" id="status-project">Kosong</span>
+              <button class="icon-btn icon-btn--kecil" id="tombol-hapus" type="button" aria-label="Hapus project" title="Hapus project" hidden>×</button>
+            </div>
+          </div>
+
+          <div class="thread" id="thread">
+            <div class="empty-chat" id="thread-kosong">
+              <div class="empty-chat__mark" aria-hidden="true">W</div>
+              <h2>Mulai dari satu kalimat</h2>
+              <p>Tulis mau bikin apa. Contohnya:</p>
+              <div class="contoh">
+                <button type="button" data-contoh="Bikin portofolio sederhana untuk siswa SMP. Ada bagian tentang aku, karya, dan kontak. Warna biru dan kuning.">Portofolio siswa</button>
+                <button type="button" data-contoh="Bikin halaman undangan acara kelas yang rapi. Ada tanggal, lokasi, dan tombol konfirmasi. Nuansa hangat.">Undangan acara kelas</button>
+                <button type="button" data-contoh="Bikin halaman profil klub foto sekolah. Ada galeri karya, jadwal latihan, dan kontak pembina.">Profil klub sekolah</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="composer">
+            <form class="composer__box" id="form-prompt">
+              <label class="sr-only" for="prompt">Mau bikin apa?</label>
+              <textarea id="prompt" rows="2" maxlength="2000" placeholder="Mau bikin apa? Contoh: portofolio sederhana, warna biru kuning, ada bagian karya dan kontak."></textarea>
+              <div class="composer__row">
+                <span class="composer__hint" id="petunjuk-prompt">Maksimal 2.000 karakter</span>
+                <button class="btn btn--primary send" id="tombol-kirim" type="submit" disabled>Kirim</button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <section class="preview">
+          <div class="preview__head">
+            <h2>Pratinjau</h2>
+            <div class="preview__actions">
+              <button class="btn btn--sm btn--ghost" id="tombol-kode" type="button" aria-pressed="false">Kode</button>
+              <a class="btn btn--sm btn--accent" id="tombol-unduh" href="#" aria-disabled="true">Unduh ZIP</a>
+            </div>
+          </div>
+
+          <div class="browser">
+            <div class="browser__bar">
+              <i></i><i></i><i></i>
+              <span class="url" id="url-pratinjau">preview.webiko.local</span>
+            </div>
+            <div class="site-wrap">
+              <iframe id="pratinjau" sandbox="allow-scripts" title="Pratinjau website hasil build"></iframe>
+              <div class="preview-empty" id="pratinjau-kosong">
+                <div class="preview-empty__mark" aria-hidden="true">▷</div>
+                <p>Pratinjau muncul di sini setelah Build pertama selesai.</p>
+              </div>
+              <div class="kode-panel" id="kode-panel" hidden>
+                <div class="kode-tabs" id="kode-tabs"></div>
+                <pre class="kode" id="kode"></pre>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="drawer-scrim" id="scrim-project"></div>
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  </div>
+
+  <template id="tpl-project">
+    <li class="project">
+      <button class="project__btn" type="button">
+        <strong class="project__nama"></strong>
+        <span class="project__meta"><i class="dot"></i><span class="project__status"></span></span>
+      </button>
+      <button class="project__hapus" type="button" aria-label="Hapus project">×</button>
+    </li>
+  </template>
+</body>
+</html>

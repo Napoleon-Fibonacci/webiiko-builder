@@ -95,6 +95,6 @@ module.exports = pembungkus(async (req, res) => {
 
   setSesi(res, user.id);
   res.statusCode = 302;
-  res.setHeader("location", "/");
+  res.setHeader("location", "/builder");
   res.end();
 });
