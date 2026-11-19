@@ -112,6 +112,17 @@
   <!-- ================= BUILDER ================= -->
   <div class="app" id="aplikasi" hidden>
     <header class="appbar">
+      <button class="project-toggle" id="tombol-project" type="button" aria-expanded="true" aria-controls="sidebar-project" aria-label="Sembunyikan daftar project" title="Sembunyikan daftar project">
+        <span class="project-toggle__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3 3 8l9 5 9-5-9-5Z"></path>
+            <path d="m3 12 9 5 9-5"></path>
+            <path d="m3 16 9 5 9-5"></path>
+          </svg>
+        </span>
+        <span class="project-toggle__label">Project</span>
+        <span class="project-toggle__count" id="jumlah-project" aria-hidden="true" hidden>0</span>
+      </button>
       <div class="logo">
         <div class="mark" aria-hidden="true">W</div>
         <div>Webiko Builder<small>Ruang kerja</small></div>
@@ -125,10 +136,11 @@
     </header>
 
     <div class="appbody">
-      <aside class="sidebar">
+      <aside class="sidebar" id="sidebar-project">
         <div class="sidebar__head">
           <h2>Project</h2>
           <button class="btn btn--sm btn--accent" id="tombol-baru" type="button">+ Baru</button>
+          <button class="icon-btn icon-btn--kecil sidebar__tutup" id="tombol-tutup-project" type="button" aria-label="Tutup daftar project">×</button>
         </div>
 
         <ul class="project-list" id="daftar-project"></ul>
@@ -209,6 +221,7 @@
       </div>
     </div>
 
+    <div class="drawer-scrim" id="scrim-project"></div>
     <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
   </div>
 

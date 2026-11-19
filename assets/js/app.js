@@ -21,6 +21,10 @@
     projectKosong: el("project-kosong"),
     tombolBaru: el("tombol-baru"),
     tplProject: el("tpl-project"),
+    tombolProject: el("tombol-project"),
+    tombolTutupProject: el("tombol-tutup-project"),
+    jumlahProject: el("jumlah-project"),
+    scrimProject: el("scrim-project"),
 
     judulProject: el("judul-project"),
     metaProject: el("meta-project"),
@@ -273,6 +277,9 @@
       state.pratinjauUrl = "";
     }
     dom.pratinjau.removeAttribute("src");
+    dom.aplikasi.removeAttribute("data-projek");
+    kunciGulir(false);
+    kunciLatar(false);
     dom.gerbang.hidden = false;
     dom.aplikasi.hidden = true;
     document.title = "Masuk — Webiko Builder";
@@ -344,7 +351,10 @@
       status.textContent = metaProyek(p);
       tombol.setAttribute("aria-pressed", aktif ? "true" : "false");
       tombol.setAttribute("aria-label", `Buka project ${p.name}`);
-      tombol.addEventListener("click", () => pilihProyek(p.id));
+      tombol.addEventListener("click", () => {
+        pilihProyek(p.id);
+        if (!mediaProyek.matches) tutupProject(false);
+      });
       hapus.setAttribute("aria-label", `Hapus project ${p.name}`);
       hapus.setAttribute("title", "Hapus project");
       hapus.addEventListener("click", (ev) => {
@@ -355,6 +365,8 @@
       dom.daftarProject.append(node);
     }
     dom.projectKosong.hidden = state.proyek.length > 0;
+    dom.jumlahProject.textContent = String(state.proyek.length);
+    dom.jumlahProject.hidden = state.proyek.length === 0;
   }
 
   async function muatProyek(pilihId) {
@@ -509,7 +521,9 @@
   function renderAktif() {
     const a = state.aktif;
     if (!a) {
-      dom.judulProject.textContent = "Pilih project";
+      dom.judulProject.textContent = state.proyek.length
+        ? "Pilih project"
+        : "Mulai project pertama";
       dom.metaProject.textContent = "index.html · style.css · script.js";
       dom.statusProject.textContent = "Kosong";
       dom.statusProject.className = "badge badge--idle";
@@ -1174,6 +1188,92 @@
   }
 
   /* -----------------------------------------------------------
+     Daftar project: sidebar bisa disembunyikan, drawer di HP
+     ----------------------------------------------------------- */
+  const mediaProyek = window.matchMedia("(min-width: 861px)");
+  const ruangKerja = document.querySelector(".workspace");
+
+  function kunciLatar(aktif) {
+    if (ruangKerja) ruangKerja.inert = Boolean(aktif);
+  }
+
+  function kunciGulir(aktif) {
+    if (aktif) {
+      const lebar = window.innerWidth - document.documentElement.clientWidth;
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.paddingRight = lebar > 0 ? `${lebar}px` : "";
+    } else {
+      document.documentElement.style.overflow = "";
+      document.body.style.paddingRight = "";
+    }
+  }
+
+  function projectTerbuka() {
+    if (mediaProyek.matches) {
+      return dom.aplikasi.getAttribute("data-projek") !== "tutup";
+    }
+    return dom.aplikasi.getAttribute("data-projek") === "buka";
+  }
+
+  function sinkronTombolProject() {
+    const terbuka = projectTerbuka();
+    const label = terbuka
+      ? "Sembunyikan daftar project"
+      : "Tampilkan daftar project";
+    dom.tombolProject.setAttribute("aria-expanded", terbuka ? "true" : "false");
+    dom.tombolProject.setAttribute("aria-label", label);
+    dom.tombolProject.setAttribute("title", label);
+  }
+
+  function tutupProject(kembaliFokus) {
+    if (mediaProyek.matches) {
+      dom.aplikasi.setAttribute("data-projek", "tutup");
+    } else {
+      dom.aplikasi.removeAttribute("data-projek");
+      kunciGulir(false);
+      kunciLatar(false);
+    }
+    sinkronTombolProject();
+    if (kembaliFokus) dom.tombolProject.focus();
+  }
+
+  function bukaProject() {
+    if (mediaProyek.matches) {
+      dom.aplikasi.removeAttribute("data-projek");
+      sinkronTombolProject();
+      return;
+    }
+    dom.aplikasi.setAttribute("data-projek", "buka");
+    kunciGulir(true);
+    kunciLatar(true);
+    sinkronTombolProject();
+    dom.tombolTutupProject.focus();
+  }
+
+  function toggleProject() {
+    if (projectTerbuka()) tutupProject(true);
+    else bukaProject();
+  }
+
+  function normalisasiProject() {
+    if (
+      mediaProyek.matches &&
+      dom.aplikasi.getAttribute("data-projek") === "buka"
+    ) {
+      dom.aplikasi.removeAttribute("data-projek");
+      kunciGulir(false);
+      kunciLatar(false);
+    }
+    if (
+      !mediaProyek.matches &&
+      dom.aplikasi.getAttribute("data-projek") === "tutup"
+    ) {
+      dom.aplikasi.removeAttribute("data-projek");
+    }
+    sinkronTombolProject();
+  }
+
+  /* -----------------------------------------------------------
      Aksi lain
      ----------------------------------------------------------- */
   async function keluar() {
@@ -1198,7 +1298,25 @@
 
   function pasangPendengar() {
     dom.formPrompt.addEventListener("submit", kirimPrompt);
+    dom.tombolBaru.addEventListener("click", () => {
+      if (!mediaProyek.matches) tutupProject(false);
+    });
     dom.tombolBaru.addEventListener("click", buatProyekBaru);
+    dom.tombolProject.addEventListener("click", toggleProject);
+    dom.tombolTutupProject.addEventListener("click", () => tutupProject(true));
+    dom.scrimProject.addEventListener("click", () => tutupProject(true));
+    if (mediaProyek.addEventListener) {
+      mediaProyek.addEventListener("change", normalisasiProject);
+    }
+    window.addEventListener("resize", normalisasiProject);
+    document.addEventListener("keydown", (ev) => {
+      if (ev.key !== "Escape" || dom.aplikasi.hidden) return;
+      if (!mediaProyek.matches && projectTerbuka()) {
+        tutupProject(true);
+      } else if (mediaProyek.matches && !projectTerbuka()) {
+        bukaProject();
+      }
+    });
     dom.tombolHapus.addEventListener("click", () => {
       if (state.aktif) hapusProyek(state.aktif.id);
     });
@@ -1256,6 +1374,7 @@
     }
 
     pasangPendengar();
+    sinkronTombolProject();
 
     try {
       const sesi = await api("/api/sesi");

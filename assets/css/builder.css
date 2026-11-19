@@ -104,6 +104,7 @@
   --code-string: #a8f0d0;
 
   --dur-fast: 140ms;
+  --dur: 240ms;
   --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
 }
 
@@ -846,6 +847,81 @@ li {
   align-items: center;
   gap: 10px;
   min-width: 0;
+}
+
+/* Tombol project: sembunyikan/tampilkan sidebar, atau buka drawer di HP. */
+.project-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  min-height: 42px;
+  padding: 0 12px;
+  border: var(--border);
+  border-radius: 10px;
+  background: var(--accent);
+  color: var(--on-accent);
+  box-shadow: var(--shadow-sm);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease),
+    box-shadow var(--dur-fast) var(--ease),
+    background-color var(--dur-fast) var(--ease);
+}
+
+.project-toggle:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--shadow-color);
+}
+
+.project-toggle:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+.project-toggle[aria-expanded="false"] {
+  background: var(--surface);
+}
+
+.project-toggle:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.project-toggle__icon svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.project-toggle__count {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border: var(--border-thin);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  font-size: 10px;
+  line-height: 1;
+}
+
+.project-toggle__count[hidden] {
+  display: none;
+}
+
+.sidebar__tutup {
+  display: none;
+}
+
+.drawer-scrim {
+  display: none;
 }
 
 .avatar {
@@ -1681,6 +1757,77 @@ li {
   }
 }
 
+/* Desktop sempit: halaman memanjang, panel tidak saling menekan. */
+@media (min-width: 861px) {
+  .btn--sm {
+    min-height: 40px;
+  }
+
+  .project__hapus {
+    top: 6px;
+    right: 6px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .project__btn {
+    padding-right: 40px;
+  }
+
+  .icon-btn--kecil {
+    width: 32px;
+    height: 32px;
+  }
+
+  .send {
+    min-height: 44px;
+  }
+
+  .app[data-projek="tutup"] .appbody {
+    grid-template-columns: 0 minmax(0, 1fr);
+  }
+
+  .app[data-projek="tutup"] .sidebar {
+    padding: 0;
+    border-right: 0;
+    overflow: hidden;
+    visibility: hidden;
+  }
+}
+
+@media (min-width: 861px) and (max-width: 1180px) {
+  .appbody {
+    height: auto;
+    min-height: calc(100vh - 68px);
+    align-items: start;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 68px;
+    height: calc(100vh - 68px);
+  }
+
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+  }
+
+  .chat {
+    min-height: 740px;
+    border-right: 0;
+    border-bottom: var(--border);
+  }
+
+  .thread {
+    max-height: 60vh;
+  }
+
+  .preview {
+    min-height: 560px;
+  }
+}
+
 @media (max-width: 1040px) {
   .login-main {
     grid-template-columns: 1fr;
@@ -1708,35 +1855,58 @@ li {
   }
 
   .sidebar {
-    border-right: 0;
-    border-bottom: var(--border);
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    overflow: visible;
+    position: fixed;
+    top: 68px;
+    bottom: 0;
+    left: 0;
+    z-index: 45;
+    width: min(320px, 86vw);
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    overflow: auto;
+    border-right: var(--border);
+    border-bottom: 0;
+    box-shadow: 6px 0 0 var(--shadow-color);
+    visibility: hidden;
+    transform: translateX(-104%);
+    transition: transform var(--dur) var(--ease), visibility var(--dur) linear;
+  }
+
+  .app[data-projek="buka"] .sidebar {
+    visibility: visible;
+    transform: none;
   }
 
   .sidebar__head {
-    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 8px;
+    width: auto;
+  }
+
+  .sidebar__tutup {
+    display: inline-grid;
+    width: 40px;
+    height: 40px;
   }
 
   .project-list {
-    display: flex;
-    overflow-x: auto;
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-    padding-bottom: 2px;
-    scrollbar-width: thin;
+    display: grid;
+    width: auto;
+    max-width: none;
+    overflow: visible;
+    padding-bottom: 0;
   }
 
   .project {
-    min-width: 168px;
-    max-width: 240px;
+    min-width: 0;
+    max-width: none;
   }
 
   .project__btn {
-    padding-right: 12px;
+    padding-right: 40px;
   }
 
   .project__hapus {
@@ -1744,8 +1914,24 @@ li {
   }
 
   .quota {
-    margin: 0;
-    width: 100%;
+    margin-top: auto;
+    width: auto;
+  }
+
+  .drawer-scrim {
+    display: block;
+    position: fixed;
+    inset: 68px 0 0;
+    z-index: 35;
+    background: var(--ink);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur) var(--ease);
+  }
+
+  .app[data-projek="buka"] .drawer-scrim {
+    opacity: 0.4;
+    pointer-events: auto;
   }
 
   .workspace {
@@ -1816,19 +2002,40 @@ li {
     display: none;
   }
 
+  .appbar .logo .mark {
+    display: none;
+  }
+
+  .project-toggle__label {
+    display: none;
+  }
+
+  .project-toggle {
+    width: 42px;
+    padding: 0;
+    position: relative;
+  }
+
+  .project-toggle__count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: var(--surface);
+  }
+
   .appbar__right {
     gap: 6px;
   }
 
   .appbar__right .icon-btn,
   .appbar__right .avatar {
-    width: 34px;
-    height: 34px;
+    width: 40px;
+    height: 40px;
   }
 
   .appbar .btn--sm {
-    min-height: 34px;
-    padding: 0 10px;
+    min-height: 40px;
+    padding: 0 11px;
   }
 
   .sidebar {
@@ -1843,8 +2050,20 @@ li {
     padding: 11px 12px;
   }
 
+  .chat__aksi {
+    gap: 6px;
+  }
+
   .chat__aksi .badge {
-    display: none;
+    display: inline-flex;
+    padding: 4px 8px;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+  }
+
+  .chat__aksi .icon-btn {
+    width: 40px;
+    height: 40px;
   }
 
   .thread {
@@ -1868,6 +2087,15 @@ li {
   .preview__actions {
     width: 100%;
     justify-content: flex-start;
+  }
+
+  .preview__actions .btn--sm {
+    min-height: 40px;
+  }
+
+  .contoh button {
+    min-height: 40px;
+    padding: 8px 13px;
   }
 
   .browser {
@@ -1896,10 +2124,11 @@ li {
 @media (max-width: 360px) {
   .login-main {
     padding-inline: 14px;
+    gap: 18px;
   }
 
   .login-card {
-    padding: 22px 16px;
+    padding: 18px 16px 22px;
   }
 
   .login-card::before {
@@ -1909,6 +2138,18 @@ li {
 
   .hero-copy h1 {
     font-size: 2.05rem;
+  }
+
+  .hero-copy p.lead {
+    margin-bottom: 16px;
+  }
+
+  .hero-points {
+    margin-bottom: 16px;
+  }
+
+  .logo {
+    font-size: 14px;
   }
 
   .appbar .avatar {
